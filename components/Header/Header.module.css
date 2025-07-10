@@ -1,0 +1,82 @@
+.header {
+  background-color: #1e1e1e;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  border-radius: 16px;
+}
+
+.headerWrapper {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f3f4f6;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.flag {
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.notification {
+  position: relative;
+}
+
+.bellIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.bellIcon:hover {
+  color: white;
+}
+
+.adminContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminImage {
+  border-radius: 9999px;
+  border: 1px solid #4b5563;
+}
+
+.name {
+  color: #f3f4f6;
+  font-weight: 500;
+}
+
+.image_container {
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    margin: 20px 40px 20px 0px;
+  }
+}

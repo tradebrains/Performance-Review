@@ -1,0 +1,67 @@
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  font-size: 14px;
+  margin: 0px;
+}
+
+.confirm_button {
+  background-color: #e04f5f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.main_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0px;
+}
+
+.form_container {
+  width: 40%;
+}
+
+.flex_button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+
+.save_button {
+  background-color: #59a8fe;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+}
+
+.active_button {
+  background-color: #f82e2e;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+}
