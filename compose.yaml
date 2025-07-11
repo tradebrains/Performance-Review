@@ -1,34 +1,20 @@
 services:
   performance_review_frontend:
-    # container_name: portal_frontend
     build:
       context: ./
-      # target: production
       dockerfile: Dockerfile
       args:
         NEXT_APP_BASE_URL: ${NEXT_APP_BASE_URL}
     volumes:
       - performance:/app/
-      # - /app/node_modules
-      # - /app/.next
     restart: always
     ports:
-      - "3030"
+      - "3030:3000" # map port 3030 to container's 3000 if needed
     networks:
       - performance_network
-    # deploy:
-    #   replicas: 2 # Number of Next.js instances to run
-    #   update_config:
-    #     parallelism: 1
-    #     delay: 30s
-    #   resources:
-    #     limits:
-    #       memory: 2g
-    #     reservations:
-    #       memory: 2g
+
 volumes:
-  performance:
-    external: true
+  performance: # removed external:true
+
 networks:
-  performance_network:
-    external: true
+  performance_network: # removed external:true
