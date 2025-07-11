@@ -20,8 +20,8 @@ const lato = Lato({
 });
 
 export const metadata = {
-  title: "Admin Portal",
-  description: "Admin Portal for managing the application",
+  title: "Performance Review",
+  description: "Performance Review Application",
 };
 
 export default function RootLayout({ children }) {

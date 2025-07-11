@@ -1007,3 +1007,7 @@ a.ck.ck-button.ck-on {
   z-index: 1100;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
+
+.modelClassname .ant-modal {
+  background-color: #1e1e1e !important;
+}

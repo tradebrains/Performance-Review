@@ -106,7 +106,8 @@ const Sidebar = ({ isMobile, isOpen }) => {
             const IconComponent = ICONS[item.icon];
             const isActive =
               pathname === item.href ||
-              item.subItems?.some((sub) => pathname === sub.href);
+              item.subItems?.some((sub) => pathname === sub.href) ||
+              pathname.includes(item.href);
 
             return (
               <div key={item.name}>

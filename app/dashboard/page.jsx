@@ -5,12 +5,6 @@ import ProtectedRoute from "../utility/client-redirect";
 import { getSearchData } from "@/api/fetchClient";
 
 function Dashboard() {
-  const getSearch = async (e) => {
-    await getSearchData(e).then((res) => {
-      console.log(res, "Search Data");
-    });
-  };
-
   useEffect(() => {
     // getSearch();
   }, []);

@@ -218,8 +218,6 @@ function YourLeadsClient() {
         page_size: pagination.size,
       };
 
-      console.log("time", dateRange, granularity);
-
       // Apply mutually exclusive filters
       if (dateRange?.[0] && dateRange?.[1] && !granularity) {
         payload.start_date = dateRange[0].format("YYYY-MM-DD");
@@ -303,8 +301,6 @@ function YourLeadsClient() {
           fontSize: "14px",
         },
       });
-
-      console.log("leadchange", res);
     } catch (err) {
       // ❌ Revert UI if API call fails
       setTableData(prevData);

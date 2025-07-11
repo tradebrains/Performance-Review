@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./create.module.css";
-import { Rate } from "antd";
+import { message, Rate } from "antd";
+import {
+  getPerformanceData,
+  getPerformanceEditData,
+  postPerformanceReviewData,
+  putPerformanceReviewData,
+} from "@/api/fetchClient";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function BonusReviewForm() {
+  const [TableData, setTableData] = useState([]);
+
   const [formData, setFormData] = useState({
     employee_id: "",
     jobTitle: "",
@@ -13,51 +22,23 @@ export default function BonusReviewForm() {
     jobDuties: "",
     performanceSummary: "",
     sections: {
-      planning: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
+      planning: { employeeRating: "", managerRating: "", employeeComment: "" },
       productivity: {
         employeeRating: "",
         managerRating: "",
         employeeComment: "",
       },
-      quality: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
-      knowledge: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
+      quality: { employeeRating: "", managerRating: "", employeeComment: "" },
+      knowledge: { employeeRating: "", managerRating: "", employeeComment: "" },
       innovation: {
         employeeRating: "",
         managerRating: "",
         employeeComment: "",
       },
-      peerComm: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
-      teamRel: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
-      writing: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
-      oralComm: {
-        employeeRating: "",
-        managerRating: "",
-        employeeComment: "",
-      },
+      peerComm: { employeeRating: "", managerRating: "", employeeComment: "" },
+      teamRel: { employeeRating: "", managerRating: "", employeeComment: "" },
+      writing: { employeeRating: "", managerRating: "", employeeComment: "" },
+      oralComm: { employeeRating: "", managerRating: "", employeeComment: "" },
       selfImprovement: {
         employeeRating: "",
         managerRating: "",
@@ -74,8 +55,6 @@ export default function BonusReviewForm() {
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-
-  console.log(formData, "formdata");
 
   const handleSectionChange = (section, role, key, value) => {
     setFormData((prev) => ({
@@ -101,7 +80,190 @@ export default function BonusReviewForm() {
       alert("Submitted Successfully!");
     } catch (err) {
       alert("Error submitting form.");
-      console.error(err);
+    }
+  };
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const employeeId = searchParams.get("employeeId");
+
+  useEffect(() => {
+    if (employeeId) {
+      const fetchTableData = async () => {
+        try {
+          const res = await getPerformanceEditData(employeeId);
+          setTableData(res?.data);
+        } catch (err) {
+          console.error("Failed to fetch leads:", err);
+        } finally {
+        }
+      };
+
+      fetchTableData();
+    }
+  }, [employeeId]);
+
+  useEffect(() => {
+    if (TableData) {
+      setFormData({
+        employee_id: TableData?.employee_id || "",
+        jobTitle: TableData?.job_title || "",
+        supervisor: TableData?.supervisor || "",
+        department: TableData?.department || "",
+        jobDuties: TableData?.jobDuties || "",
+        performanceSummary: TableData?.performanceSummary || "",
+        sections: {
+          planning: {
+            employeeRating: TableData?.sections?.planning?.employeeRating || "",
+            managerRating: TableData?.sections?.planning?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.planning?.employeeComment || "",
+          },
+          productivity: {
+            employeeRating:
+              TableData?.sections?.productivity?.employeeRating || "",
+            managerRating:
+              TableData?.sections?.productivity?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.productivity?.employeeComment || "",
+          },
+          quality: {
+            employeeRating: TableData?.sections?.quality?.employeeRating || "",
+            managerRating: TableData?.sections?.quality?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.quality?.employeeComment || "",
+          },
+          knowledge: {
+            employeeRating:
+              TableData?.sections?.knowledge?.employeeRating || "",
+            managerRating: TableData?.sections?.knowledge?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.knowledge?.employeeComment || "",
+          },
+          innovation: {
+            employeeRating:
+              TableData?.sections?.innovation?.employeeRating || "",
+            managerRating: TableData?.sections?.innovation?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.innovation?.employeeComment || "",
+          },
+          peerComm: {
+            employeeRating: TableData?.sections?.peerComm?.employeeRating || "",
+            managerRating: TableData?.sections?.peerComm?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.peerComm?.employeeComment || "",
+          },
+          teamRel: {
+            employeeRating: TableData?.sections?.teamRel?.employeeRating || "",
+            managerRating: TableData?.sections?.teamRel?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.teamRel?.employeeComment || "",
+          },
+          writing: {
+            employeeRating: TableData?.sections?.writing?.employeeRating || "",
+            managerRating: TableData?.sections?.writing?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.writing?.employeeComment || "",
+          },
+          oralComm: {
+            employeeRating: TableData?.sections?.oralComm?.employeeRating || "",
+            managerRating: TableData?.sections?.oralComm?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.oralComm?.employeeComment || "",
+          },
+          selfImprovement: {
+            employeeRating:
+              TableData?.sections?.selfImprovement?.employeeRating || "",
+            managerRating:
+              TableData?.sections?.selfImprovement?.managerRating || "",
+            employeeComment:
+              TableData?.sections?.selfImprovement?.employeeComment || "",
+          },
+        },
+        otherCriteria: TableData?.otherCriteria || "",
+        futureGoals: TableData?.futureGoals || "",
+        overallSummary: TableData?.overallSummary || "",
+        employeeComments: TableData?.employeeComments || "",
+        managerComments: TableData?.managerComments || "",
+      });
+    }
+  }, [TableData]);
+
+  const postPerformanceReview = async () => {
+    const data = {
+      employee_id: formData.employee_id,
+      job_title: formData.jobTitle,
+      supervisor: formData.supervisor,
+      department: formData.department,
+      jobDuties: formData.jobDuties,
+      performanceSummary: formData.performanceSummary,
+
+      planning_employee_rating: formData.sections.planning.employeeRating,
+      planning_manager_rating: formData.sections.planning.managerRating,
+      productivity_comments: formData.sections.productivity.employeeComment,
+      productivity_employee_rating:
+        formData.sections.productivity.employeeRating,
+      productivity_manager_rating: formData.sections.productivity.managerRating,
+      quality_comments: formData.sections.quality.employeeComment,
+      quality_employee_rating: formData.sections.quality.employeeRating,
+      quality_manager_rating: formData.sections.quality.managerRating,
+      knowledge_comments: formData.sections.knowledge.employeeComment,
+      knowledge_employee_rating: formData.sections.knowledge.employeeRating,
+      knowledge_manager_rating: formData.sections.knowledge.managerRating,
+      innovation_comments: formData.sections.innovation.employeeComment,
+      innovation_employee_rating: formData.sections.innovation.employeeRating,
+      innovation_manager_rating: formData.sections.innovation.managerRating,
+      peerComm_comments: formData.sections.peerComm.employeeComment,
+      peerComm_employee_rating: formData.sections.peerComm.employeeRating,
+      peerComm_manager_rating: formData.sections.peerComm.managerRating,
+      teamRel_comments: formData.sections.teamRel.employeeComment,
+      teamRel_employee_rating: formData.sections.teamRel.employeeRating,
+      teamRel_manager_rating: formData.sections.teamRel.managerRating,
+      writing_comments: formData.sections.writing.employeeComment,
+      writing_employee_rating: formData.sections.writing.employeeRating,
+      writing_manager_rating: formData.sections.writing.managerRating,
+      oralComm_comments: formData.sections.oralComm.employeeComment,
+      oralComm_employee_rating: formData.sections.oralComm.employeeRating,
+      oralComm_manager_rating: formData.sections.oralComm.managerRating,
+      selfImprovement_comments:
+        formData.sections.selfImprovement.employeeComment,
+      selfImprovement_employee_rating:
+        formData.sections.selfImprovement.employeeRating,
+      selfImprovement_manager_rating:
+        formData.sections.selfImprovement.managerRating,
+      otherCriteria: formData.otherCriteria,
+      futureGoals: formData.futureGoals,
+      overallSummary: formData.overallSummary,
+      employeeComments: formData.employeeComments,
+      managerComments: formData.managerComments,
+      planning_comments: formData.sections.planning.employeeComment,
+    };
+    if (employeeId) {
+      try {
+        const resp = await putPerformanceReviewData(employeeId, data);
+
+        if (resp?.message === "Performance review form updated successfully.") {
+          message.success(resp?.message);
+          router.push("/performance-review");
+        } else {
+          message.error("Failed to submit Performance Review.");
+        }
+      } catch (error) {
+        if (error.response) {
+          message.error("Failed to submit Performance Review.");
+        } else {
+          message.error("Something went wrong.");
+        }
+      }
+    } else {
+      await postPerformanceReviewData(data).then((resp) => {
+        if (resp?.message === "Performance review form Created successfully.") {
+          message.success(resp?.message);
+          router.push("/performance-review");
+        } else {
+          message.error("Failed to submit Performance Review.");
+        }
+      });
     }
   };
 
@@ -115,7 +277,7 @@ export default function BonusReviewForm() {
             type="text"
             className={styles.input}
             placeholder="Employee ID"
-            value={formData.employeeId}
+            value={formData.employee_id}
             onChange={(e) => handleChange("employeeId", e.target.value)}
           />
         </div>
@@ -858,7 +1020,7 @@ export default function BonusReviewForm() {
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
               <select
-                value={formData.sections.selfImprovement}
+                value={formData?.sections?.selfImprovement?.managerRating}
                 onChange={(e) =>
                   handleSectionChange(
                     "selfImprovement",
@@ -880,7 +1042,7 @@ export default function BonusReviewForm() {
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
               <select
-                value={formData.sections.selfImprovement}
+                value={formData?.sections?.selfImprovement?.managerRating}
                 onChange={(e) =>
                   handleSectionChange(
                     "selfImprovement",
@@ -938,10 +1100,17 @@ export default function BonusReviewForm() {
         onChange={(e) => handleChange("managerComments", e.target.value)}
       />
 
-      <div className={styles.buttonGroup}>
-        <button className={styles.button} onClick={handleSubmit}>
-          Submit
-        </button>
+      <div className={styles.buttonContainer}>
+        <div className={styles.buttonGroup}>
+          <button className={styles.button} onClick={postPerformanceReview}>
+            Save Draft
+          </button>
+        </div>
+        <div className={styles.buttonGroup}>
+          <button className={styles.button} onClick={postPerformanceReview}>
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

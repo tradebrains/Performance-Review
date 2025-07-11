@@ -1,30 +1,76 @@
 import { authPost } from "./authClient";
 import { get, post, put } from "./MainClient";
 
-export const getSearchData = async (input) => {
-  const searchResp = await get(`company/search/portal/`).then((resp) => {
-    return resp;
-  });
-  return searchResp;
-};
-
-export const postLoginData = async (data) => {
+export const postLogin = async (data) => {
   const loginResp = await authPost(`auth/login/`, data).then((resp) => {
     return resp;
   });
   return loginResp;
 };
 
-export const putUserRoleUpdate = async (data) => {
-  const response = await put(`user/type/`, data).then((resp) => {
-    return resp?.data;
+export const getPerformanceData = async (input) => {
+  const searchResp = await get(`performance-reviews/`).then((resp) => {
+    return resp;
+  });
+  return searchResp;
+};
+
+export const getPerformanceEditData = async (id) => {
+  const searchResp = await get(`performance-reviews/${id}/`).then((resp) => {
+    return resp;
+  });
+  return searchResp;
+};
+
+export const postPerformanceReviewData = async (data) => {
+  const response = await post(`performance-reviews/`, data).then((resp) => {
+    return resp;
   });
   return response;
 };
 
-export const postLogin = async (data) => {
-  const response = await post(`sales-dashboard/login/`, data).then((resp) => {
+export const putPerformanceReviewData = async (id, data) => {
+  const response = await put(`performance-reviews/${id}/`, data).then(
+    (resp) => {
+      return resp?.data;
+    }
+  );
+  return response;
+};
+
+export const getAnnouncementData = async (id) => {
+  const searchResp = await get(`announcementReview/notification/`).then(
+    (resp) => {
+      return resp;
+    }
+  );
+  return searchResp;
+};
+
+export const getAnnouncementDataId = async (id) => {
+  const searchResp = await get(`announcementReview/notification/${id}/`).then(
+    (resp) => {
+      return resp;
+    }
+  );
+  return searchResp;
+};
+
+export const postAnnouncementData = async (data) => {
+  const searchResp = await post(`announcementReview/notification/`, data).then(
+    (resp) => {
+      return resp;
+    }
+  );
+  return searchResp;
+};
+
+export const putAnnouncementData = async (id, data) => {
+  const searchResp = await put(
+    `announcementReview/notification/${id}/`,
+    data
+  ).then((resp) => {
     return resp;
   });
-  return response;
+  return searchResp;
 };

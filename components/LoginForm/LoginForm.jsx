@@ -23,14 +23,9 @@ function LoginForm() {
       await postLogin(values).then((resp) => {
         if (resp?.status === 200) {
           window.location.href = "/dashboard";
-          // navigate.push("/dashboard");
         }
-
-        cookie.set("admin_user_data", resp?.data.user?.accountType, {
-          expires: 999,
-        });
-        cookie.set("admin_login_session", "true", { expires: 999 });
-        cookie.set("performance_access_token", resp?.data?.access_token, {
+        cookie.set("performance_login_session", "true", { expires: 999 });
+        cookie.set("performance_access_token", resp?.data?.tokens?.access, {
           expires: 999,
         });
         dispatch(setAuth(resp.data));

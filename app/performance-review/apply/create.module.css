@@ -81,6 +81,13 @@
   justify-content: flex-end;
 }
 
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 50px;
+}
+
 .button {
   height: 40px;
   width: 100px;

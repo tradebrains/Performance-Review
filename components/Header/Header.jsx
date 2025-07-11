@@ -32,7 +32,7 @@ function Header() {
       : "";
 
   const userData = useSelector(authStore);
-  const userName = userData?.userData?.user?.first_name || "User";
+  const userName = userData?.userData?.username || "User";
 
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215).toString(16)}`;
