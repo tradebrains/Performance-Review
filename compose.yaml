@@ -9,7 +9,7 @@ services:
       - performance:/app/
     restart: always
     ports:
-      - "3030:3000" # map port 3030 to container's 3000 if needed
+      - "3050:3050" # map port 3030 to container's 3000 if needed
     networks:
       - performance_network
 

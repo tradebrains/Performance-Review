@@ -33,7 +33,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expose the port that Next.js listens on
-EXPOSE 3030
+EXPOSE 3050
 
 # Set the entrypoint script to handle the atomic copy of files to the shared volume and start the Next.js server
 CMD ["/entrypoint.sh"]
