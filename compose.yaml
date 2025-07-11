@@ -16,16 +16,16 @@ services:
       - "3030"
     networks:
       - performance_network
-    deploy:
-      replicas: 2 # Number of Next.js instances to run
-      update_config:
-        parallelism: 1
-        delay: 30s
-      resources:
-        limits:
-          memory: 2g
-        reservations:
-          memory: 2g
+    # deploy:
+    #   replicas: 2 # Number of Next.js instances to run
+    #   update_config:
+    #     parallelism: 1
+    #     delay: 30s
+    #   resources:
+    #     limits:
+    #       memory: 2g
+    #     reservations:
+    #       memory: 2g
 volumes:
   performance:
     external: true
