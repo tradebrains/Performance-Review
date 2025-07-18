@@ -4,7 +4,8 @@ module.exports = {
   // reactStrictMode: true,
   env: {
     // NEXT_APP_BASE_URL: "https://portal.tradebrains.in/api/",
-    NEXT_APP_BASE_URL: "https://api.dev.hrms.bloomingwaves.com/api/",
+    // NEXT_APP_BASE_URL: "https://api.dev.hrms.bloomingwaves.com/api/",
+    NEXT_APP_BASE_URL: "http://localhost:8000/api/",
   },
   async headers() {
     return [];

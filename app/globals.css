@@ -1011,3 +1011,39 @@ a.ck.ck-button.ck-on {
 .modelClassname .ant-modal {
   background-color: #1e1e1e !important;
 }
+
+.modelClassname .ant-modal-content {
+  background-color: #1e1e1e !important;
+}
+
+.custom-rate .ant-rate-star svg {
+  color: white !important;
+}
+
+.custom-rate.rated .ant-rate-star-full svg {
+  color: #fadb14 !important;
+}
+
+.custom-rate.rated .ant-rate-star-half .ant-rate-star-first svg {
+  color: #fadb14 !important;
+}
+
+.custom-rate.rated .ant-rate-star-half .ant-rate-star-second svg {
+  color: white !important;
+}
+
+.select-custom
+  .ant-select-selector
+  .ant-select-selection-wrap
+  .ant-select-selection-placeholder {
+  color: white;
+}
+
+.form-placeholder
+  .ant-row
+  .ant-col
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  ::placeholder {
+  color: white;
+}

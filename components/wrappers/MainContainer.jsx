@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import AuthLayoutWrapper from "@/app/AuthLayoutWrapper";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons"; // ✅ Ant icons
 import { usePathname } from "next/navigation";
+import { getUserData } from "@/api/fetchClient";
 
 const MainContainer = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
