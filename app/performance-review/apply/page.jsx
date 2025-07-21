@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./create.module.css";
 import { message, Rate } from "antd";
 import {
+  getManagersList,
   getPerformanceData,
   getPerformanceEditData,
   postPerformanceReviewData,
@@ -13,7 +14,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function BonusReviewForm() {
   const [TableData, setTableData] = useState([]);
-
+  const [managers, setManagers] = useState([]);
   const [formData, setFormData] = useState({
     employee_id: "",
     jobTitle: "",
@@ -104,6 +105,19 @@ export default function BonusReviewForm() {
       fetchTableData();
     }
   }, [employeeId]);
+
+  useEffect(() => {
+    const fetchManagers = async () => {
+      try {
+        const resp = await getManagersList();
+        if (resp?.status === 200) {
+          setManagers(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchManagers();
+  }, []);
 
   useEffect(() => {
     if (TableData) {
@@ -271,7 +285,7 @@ export default function BonusReviewForm() {
 
   return (
     <div className={styles.container}>
-      <h1>Bonus Review Form</h1>
+      <h3>Performance Review Form</h3>
       <div className={styles.row}>
         <div className={styles.w_50}>
           <p>Employee Id</p>
@@ -297,13 +311,17 @@ export default function BonusReviewForm() {
       <div className={styles.row}>
         <div className={styles.w_50}>
           <p>Supervisor/Manager</p>
-          <input
-            type="text"
+          <select
             className={styles.input}
-            placeholder="Supervisor/Manager"
             value={formData.supervisor}
             onChange={(e) => handleChange("supervisor", e.target.value)}
-          />
+          >
+            {managers.map((manager) => (
+              <option key={manager.id} value={manager.id}>
+                {manager.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className={styles.w_50}>
           <p>Department</p>

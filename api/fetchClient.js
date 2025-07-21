@@ -22,6 +22,13 @@ export const getUserData = async () => {
   return searchResp;
 };
 
+export const getManagersList = async () => {
+  const searchResp = await get(`manager-list/`).then((resp) => {
+    return resp;
+  });
+  return searchResp;
+};
+
 export const getPerformanceData = async () => {
   const searchResp = await get(`performance-reviews/`).then((resp) => {
     return resp;

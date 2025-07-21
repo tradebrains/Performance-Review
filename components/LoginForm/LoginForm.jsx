@@ -2,11 +2,16 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Form, Input, Modal } from "antd";
+import { Form, Input, Modal, Select } from "antd";
 import { useRouter } from "next/navigation";
 import cookie from "js-cookie";
 import { useDispatch } from "react-redux";
-import { getEmployeeDetails, postLogin, postRegister } from "@/api/fetchClient";
+import {
+  getEmployeeDetails,
+  getManagersList,
+  postLogin,
+  postRegister,
+} from "@/api/fetchClient";
 import { setAuth } from "@/redux/reducer/authSlice";
 import { setEmployee } from "@/redux/reducer/employeeSlice";
 import Logo from "../../assets/logo/logo.png";
@@ -16,9 +21,11 @@ function LoginForm() {
   const [apiLoader, setApiLoader] = useState(false);
   const [apiError, setApiError] = useState();
   const [form] = Form.useForm();
+  const { Option } = Select;
   const [formRegister] = Form.useForm();
   const dispatch = useDispatch();
   const [Model, setModel] = useState(false);
+  const [managers, setManagers] = useState([]);
   const onSubmit = async (values) => {
     setApiLoader(true);
     setApiError(null);
@@ -61,6 +68,19 @@ function LoginForm() {
       setApiLoader(false);
     }
   };
+
+  useEffect(() => {
+    const fetchManagers = async () => {
+      try {
+        const resp = await getManagersList();
+        if (resp?.status === 200) {
+          setManagers(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchManagers();
+  }, []);
 
   const [registerLoader, setRegisterLoader] = useState(false);
   const [registerError, setRegisterError] = useState(null);
@@ -241,6 +261,42 @@ function LoginForm() {
                           auth-form-input w-100`}
                   placeholder="Username"
                 />
+              </Form.Item>
+              <Form.Item
+                // label="Name"
+                name="employee_name"
+                rules={[{ required: true, message: "Please enter the name" }]}
+                className="form-placeholder"
+              >
+                <Input style={{ height: "40px" }} placeholder="Enter Name" />
+              </Form.Item>
+              <Form.Item
+                // label="Designation"
+                name="designation"
+                className="form-placeholder"
+                rules={[{ required: true, message: "Please enter Department" }]}
+              >
+                <Input
+                  style={{ height: "40px" }}
+                  placeholder="Enter Designation"
+                />
+              </Form.Item>
+              <Form.Item
+                // label="Reporting Manager"
+                name="reporting_manager"
+                rules={[{ required: true, message: "Please select a manager" }]}
+              >
+                <Select
+                  style={{ height: "40px" }}
+                  placeholder="Select Manager"
+                  className="select-custom"
+                >
+                  {managers.map((manager) => (
+                    <Option key={manager?.id} value={manager?.id}>
+                      {manager?.name}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
               <Form.Item
                 className={`dark-input-login w-100

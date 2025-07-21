@@ -1,9 +1,7 @@
 "use client";
-import { getUserData } from "@/api/fetchClient";
-import { authStore } from "@/redux/reducer/authSlice";
+import { getManagersList, getUserData } from "@/api/fetchClient";
 import { Button, Form, Input, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import styles from "./user.module.css";
 import CustomTable from "@/components/CustomTable";
 
@@ -12,6 +10,7 @@ function UserList() {
   const [form] = Form.useForm();
   const { Option } = Select;
   const [userData, setUserData] = useState([]);
+  const [managers, setManagers] = useState([]);
   useEffect(() => {
     const getUser = async () => {
       await getUserData().then((resp) => {
@@ -20,42 +19,6 @@ function UserList() {
     };
     getUser();
   }, []);
-
-  const authUserData = useSelector(authStore);
-
-  const roleOptions = [
-    {
-      label: "Admin",
-      value: "Admin",
-    },
-    {
-      label: "Employee",
-      value: "Employee",
-    },
-  ];
-
-  const managerOptions = [
-    {
-      label: "Kritesh Abhishek",
-      value: "Kritesh Abhishek",
-    },
-    {
-      label: "Hitesh Singhi",
-      value: "Hitesh Singhi",
-    },
-    {
-      label: "Anoushka Roy",
-      value: "Anoushka Roy",
-    },
-    {
-      label: "Mohammed Mazhar Ahmed",
-      value: "Mohammed Mazhar Ahmed",
-    },
-    {
-      label: "Abdul Jaseem",
-      value: "Abdul Jaseem",
-    },
-  ];
 
   const baseCellStyle = {
     background: "#1e1e1e",
@@ -90,31 +53,45 @@ function UserList() {
     ),
   });
 
+  useEffect(() => {
+    const fetchManagers = async () => {
+      try {
+        const resp = await getManagersList();
+        if (resp?.status === 200) {
+          setManagers(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchManagers();
+  }, []);
+
   const columns = [
     {
       title: <span>Name </span>,
-      dataIndex: "date",
+      dataIndex: "employee_name",
       fixed: "left",
       width: "40px",
-      render: (text, record) => renderCell(new Date(text).toLocaleDateString()),
+      render: (text, record) => renderCell(text || ""),
     },
     {
       title: <p>Email ID</p>,
-      dataIndex: "name",
+      dataIndex: "email",
       width: "50px",
-      render: (text, record) => renderCell(record?.name?.name || "-"),
+      render: (text, record) => renderCell(text || ""),
     },
     {
       title: <p>Department</p>,
-      dataIndex: "department",
+      dataIndex: "designation",
       width: "50px",
       render: (text) => renderCell(text || ""),
     },
     {
       title: <p>Reporting Manager</p>,
-      dataIndex: "supervisor",
+      dataIndex: "reporting_manager",
       width: "50px",
-      render: (text) => renderCell(text || ""),
+      render: (text) =>
+        renderCell(managers?.find((m) => m.id === text)?.name || ""),
     },
   ];
 
@@ -127,107 +104,14 @@ function UserList() {
     <div>
       <div className={styles.userListHeader}>
         <h3>User List</h3>
-
-        {authUserData?.userData?.is_superuser === true && (
-          <button
-            type="primary"
-            onClick={() => {
-              setModel(true);
-            }}
-            className={styles.addUserButton}
-          >
-            Update User
-          </button>
-        )}
       </div>
       <div className={`custom-antd-head-dark`}>
         <CustomTable
           className="custom-ant-table"
           columns={columns}
-          // data={TableData}
+          data={userData}
         />
       </div>
-      <Modal
-        title={""}
-        visible={Model}
-        centered
-        className="modelClassname"
-        wrapClassName={"modelClassname"}
-        onCancel={() => {
-          setModel(false);
-        }}
-        footer={[""]}
-      >
-        <div className="w-100">
-          <Form form={form} layout="vertical" onFinish={handleFinish}>
-            <Form.Item
-              label="User ID"
-              name="userId"
-              rules={[{ required: true, message: "Please select a User ID" }]}
-            >
-              <Select placeholder="Select User ID" className="select-custom">
-                {userData.map((user) => (
-                  <Option key={user.email} value={user.email}>
-                    {user.email}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Please enter the name" }]}
-              className="form-placeholder"
-            >
-              <Input placeholder="Enter Name" />
-            </Form.Item>
-
-            <Form.Item
-              label="Designation"
-              name="designation"
-              className="form-placeholder"
-              rules={[{ required: true, message: "Please enter designation" }]}
-            >
-              <Input placeholder="Enter Designation" />
-            </Form.Item>
-
-            <Form.Item
-              label="User Role"
-              name="userRole"
-              rules={[{ required: true, message: "Please select a user role" }]}
-            >
-              <Select placeholder="Select Role" className="select-custom">
-                {roleOptions.map((role) => (
-                  <Option key={role.value} value={role.value}>
-                    {role.label}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label="Reporting Manager"
-              name="reportingManager"
-              rules={[{ required: true, message: "Please select a manager" }]}
-            >
-              <Select placeholder="Select Manager" className="select-custom">
-                {managerOptions.map((manager) => (
-                  <Option key={manager.value} value={manager.value}>
-                    {manager.label}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </div>
-      </Modal>
     </div>
   );
 }
