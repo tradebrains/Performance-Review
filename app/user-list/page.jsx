@@ -5,6 +5,7 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./user.module.css";
+import CustomTable from "@/components/CustomTable";
 
 function UserList() {
   const [Model, setModel] = React.useState(false);
@@ -56,6 +57,67 @@ function UserList() {
     },
   ];
 
+  const baseCellStyle = {
+    background: "#1e1e1e",
+    borderRight: "1px solid #2f2f2f",
+    borderLeft: "1px solid #2f2f2f",
+    borderBottom: "none",
+  };
+
+  const baseTextStyle = {
+    fontSize: "14px",
+    fontWeight: "400",
+    color: "white",
+  };
+
+  const renderCell = (
+    text,
+    customStyle = {},
+    extraClasses = "",
+    onClick = null
+  ) => ({
+    props: { style: baseCellStyle },
+    children: (
+      <span
+        onClick={onClick}
+        className={`ff-lato ${extraClasses} ${
+          onClick ? "pointer link-hover-underline" : ""
+        }`}
+        style={{ ...baseTextStyle, ...customStyle }}
+      >
+        {text}
+      </span>
+    ),
+  });
+
+  const columns = [
+    {
+      title: <span>Name </span>,
+      dataIndex: "date",
+      fixed: "left",
+      width: "40px",
+      render: (text, record) => renderCell(new Date(text).toLocaleDateString()),
+    },
+    {
+      title: <p>Email ID</p>,
+      dataIndex: "name",
+      width: "50px",
+      render: (text, record) => renderCell(record?.name?.name || "-"),
+    },
+    {
+      title: <p>Department</p>,
+      dataIndex: "department",
+      width: "50px",
+      render: (text) => renderCell(text || ""),
+    },
+    {
+      title: <p>Reporting Manager</p>,
+      dataIndex: "supervisor",
+      width: "50px",
+      render: (text) => renderCell(text || ""),
+    },
+  ];
+
   const handleFinish = (values) => {
     onSubmit(values);
     form.resetFields();
@@ -77,6 +139,13 @@ function UserList() {
             Update User
           </button>
         )}
+      </div>
+      <div className={`custom-antd-head-dark`}>
+        <CustomTable
+          className="custom-ant-table"
+          columns={columns}
+          // data={TableData}
+        />
       </div>
       <Modal
         title={""}
