@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { getPerformanceData } from "@/api/fetchClient";
+import { getManagersList, getPerformanceData } from "@/api/fetchClient";
 import CustomTable from "@/components/CustomTable";
 import CustomPagination from "@/components/CustomPagination";
 import styles from "./main.module.css";
@@ -36,9 +36,8 @@ function formatDate(dateStr) {
 
 function PerformanceReview() {
   const router = useRouter();
-
+  const [managers, setManagers] = useState([]);
   const [TableData, setTableData] = useState([]);
-
   const [pagination, setPagination] = useState({
     current: 1,
     size: 10,
@@ -61,6 +60,21 @@ function PerformanceReview() {
 
     fetchTableData();
   }, []);
+
+  useEffect(() => {
+    const fetchManagers = async () => {
+      try {
+        const resp = await getManagersList();
+        if (resp?.status === 200) {
+          setManagers(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchManagers();
+  }, []);
+
+  console.log(managers, "managers");
 
   const baseCellStyle = {
     background: "#1e1e1e",
@@ -119,7 +133,11 @@ function PerformanceReview() {
       title: <p>Manager</p>,
       dataIndex: "supervisor",
       width: "50px",
-      render: (text) => renderCell(text || ""),
+      render: (text) => {
+        const foundManager = managers?.find((m) => m.id == text);
+
+        return renderCell(foundManager?.name || "");
+      },
     },
     {
       title: <p>Rating (Emp/Mgr)</p>,
