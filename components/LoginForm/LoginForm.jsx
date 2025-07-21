@@ -176,9 +176,7 @@ function LoginForm() {
           </p>
         </div>
         <Modal
-          title={
-            <p className={`fs-s-18 mb-0 fw-600 ${"text-white"}`}>Register</p>
-          }
+          title={<p className={`${styles.register_title_modal}`}>Register</p>}
           visible={Model}
           centered
           className="modelClassname"
@@ -217,7 +215,7 @@ function LoginForm() {
                   style={{ height: "40px" }}
                   className={`
                           auth-form-input w-100`}
-                  placeholder="Username"
+                  placeholder="Email"
                 />
               </Form.Item>
               <Form.Item
@@ -272,10 +270,15 @@ function LoginForm() {
                 Register
               </button>
             </Form>
-            <div className="account-footer">
+            <div className={styles.register_footer}>
               <p>
                 Already have an account?{" "}
-                <span onClick={() => setModel(false)}>Login</span>
+                <span
+                  className={styles.register}
+                  onClick={() => setModel(false)}
+                >
+                  Login
+                </span>
               </p>
             </div>
           </div>
