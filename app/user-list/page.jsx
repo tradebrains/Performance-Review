@@ -20,7 +20,6 @@ function UserList() {
   }, []);
 
   const authUserData = useSelector(authStore);
-  console.log("authUserData", authUserData);
 
   const roleOptions = [
     {
