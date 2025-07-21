@@ -3,7 +3,7 @@
 module.exports = {
   // reactStrictMode: true,
   env: {
-    NEXT_APP_BASE_URL: "https://api.performance.review.tradebrains.net/api/",
+    NEXT_APP_BASE_URL: "https://performance-review.tradebrains.net/api/",
     // NEXT_APP_BASE_URL: "http://localhost:8000/api/",
   },
   async headers() {
