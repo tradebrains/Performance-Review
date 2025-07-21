@@ -204,10 +204,6 @@ function PerformanceReview() {
     },
   ];
 
-  const employee = useSelector(employeeStore);
-
-  console.log(employee, "userData");
-
   return (
     <div className="my-body">
       <div className={styles.flex_search_button}>
