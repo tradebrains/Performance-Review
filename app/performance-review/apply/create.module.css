@@ -66,6 +66,12 @@
   flex-direction: column;
 }
 
+.rating {
+  width: 100%;
+  /* background: red; */
+  /* color: white; */
+}
+
 .select {
   border: 1px solid #555;
   background: #222;

@@ -21,3 +21,7 @@
   margin-top: 20px;
   background: linear-gradient(90deg, #ff9b44 0%, #fc6075 100%);
 }
+
+.register {
+  cursor: pointer;
+}

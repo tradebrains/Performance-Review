@@ -69,6 +69,8 @@ export default function BonusReviewForm() {
     }));
   };
 
+  console.log(formData, "formData");
+
   const handleSubmit = async () => {
     try {
       const res = await fetch("/api/submit-review", {
@@ -367,47 +369,30 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating</label>
-              <select
-                value={formData.sections.planning.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "planning",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.planning.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.planning.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.planning.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "planning",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+
+              <Rate
+                allowHalf
+                value={Number(formData.sections.planning.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.planning.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -440,47 +425,37 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.productivity.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "productivity",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={
+                  Number(formData.sections.productivity.employeeRating) || 0
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
+                }
+                className={`custom-rate ${
+                  formData.sections.productivity.employeeRating > 0
+                    ? "rated"
+                    : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.productivity.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "productivity",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={
+                  Number(formData.sections.productivity.managerRating) || 0
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
+                }
+                className={`custom-rate ${
+                  formData.sections.productivity.managerRating > 0
+                    ? "rated"
+                    : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -516,47 +491,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.quality.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "quality",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.quality.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.quality.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.quality.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "quality",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.quality.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.quality.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -587,47 +544,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.knowledge.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "knowledge",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.knowledge.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.knowledge.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.knowledge.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "knowledge",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.knowledge.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.knowledge.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -658,47 +597,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.innovation.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "innovation",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.innovation.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.innovation.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.innovation.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "innovation",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.innovation.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.innovation.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -734,47 +655,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.peerComm.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "peerComm",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.peerComm.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.peerComm.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.peerComm.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "peerComm",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.peerComm.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.peerComm.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -806,47 +709,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.teamRel.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "teamRel",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.teamRel.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.teamRel.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.teamRel.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "teamRel",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.teamRel.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.teamRel.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -878,47 +763,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.writing.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "writing",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.writing.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.writing.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.writing.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "writing",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.writing.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.writing.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -949,47 +816,29 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData.sections.oralComm.employeeRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "oralComm",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.oralComm.employeeRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.oralComm.employeeRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData.sections.oralComm.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "oralComm",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={Number(formData.sections.oralComm.managerRating) || 0}
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                className={`custom-rate ${
+                  formData.sections.oralComm.managerRating > 0 ? "rated" : ""
+                }`}
+              />
             </div>
           </div>
         </div>
@@ -1019,47 +868,39 @@ export default function BonusReviewForm() {
           <div className={styles.ratingRow}>
             <div className={styles.rating_container}>
               <label>Employee Rating:</label>
-              <select
-                value={formData?.sections?.selfImprovement?.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "selfImprovement",
-                    "employee",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={
+                  Number(formData?.sections?.selfImprovement?.employeeRating) ||
+                  0
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
+                }
+                className={`custom-rate ${
+                  formData?.sections?.selfImprovement?.employeeRating > 0
+                    ? "rated"
+                    : ""
+                }`}
+              />
             </div>
             <div className={styles.rating_container}>
               <label>Manager Rating:</label>
-              <select
-                value={formData?.sections?.selfImprovement?.managerRating}
-                onChange={(e) =>
-                  handleSectionChange(
-                    "selfImprovement",
-                    "manager",
-                    "Rating",
-                    e.target.value
-                  )
+              <Rate
+                allowHalf
+                value={
+                  Number(formData?.sections?.selfImprovement?.managerRating) ||
+                  0
                 }
-                className={styles.select}
-              >
-                <option value="">Select</option>
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) =>
+                  handleSectionChange("planning", "employee", "Rating", value)
+                }
+                className={`custom-rate ${
+                  formData?.sections?.selfImprovement?.managerRating > 0
+                    ? "rated"
+                    : ""
+                }`}
+              />
             </div>
           </div>
         </div>

@@ -8,7 +8,21 @@ export const postLogin = async (data) => {
   return loginResp;
 };
 
-export const getPerformanceData = async (input) => {
+export const postRegister = async (data) => {
+  const loginResp = await authPost(`auth/register/`, data).then((resp) => {
+    return resp;
+  });
+  return loginResp;
+};
+
+export const getUserData = async () => {
+  const searchResp = await get(`auth/user-details/`).then((resp) => {
+    return resp;
+  });
+  return searchResp;
+};
+
+export const getPerformanceData = async () => {
   const searchResp = await get(`performance-reviews/`).then((resp) => {
     return resp;
   });
@@ -73,4 +87,13 @@ export const putAnnouncementData = async (id, data) => {
     return resp;
   });
   return searchResp;
+};
+
+export const getEmployeeDetails = async (email) => {
+  const response = await get(`employeebasics/?user_id__email=${email}`).then(
+    (resp) => {
+      return resp;
+    }
+  );
+  return response;
 };
