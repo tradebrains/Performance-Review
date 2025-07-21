@@ -174,21 +174,21 @@ export default function Announcement() {
 
           <div className={`custom-antd-head-dark`}>
             <div className={styles.table_wrapper}>
-              {loading && (
+              {loading ? (
                 <div className={styles.loader_overlay}>
                   <span className={styles.loader_spinner}>
                     <Spin size="large" tip="Loading..." />
                   </span>
                 </div>
+              ) : (
+                <div>
+                  <CustomTable
+                    className="custom-ant-table"
+                    columns={columns}
+                    data={TableData}
+                  />
+                </div>
               )}
-
-              <div>
-                <CustomTable
-                  className="custom-ant-table"
-                  columns={columns}
-                  data={TableData}
-                />
-              </div>
             </div>
 
             {/* <CustomPagination

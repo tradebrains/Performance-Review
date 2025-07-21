@@ -65,6 +65,12 @@
   margin-bottom: 10px;
 }
 
+.loader_overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .table_wrapper {
   position: relative;
 }
