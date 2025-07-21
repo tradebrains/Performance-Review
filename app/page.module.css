@@ -25,3 +25,21 @@
 .register {
   cursor: pointer;
 }
+
+.register_title_modal {
+  background-color: #1e1e1e !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  padding: 10px !important;
+  text-align: center !important;
+}
+
+.register_footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 14px;
+}
