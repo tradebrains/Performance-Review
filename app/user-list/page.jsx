@@ -4,6 +4,7 @@ import { authStore } from "@/redux/reducer/authSlice";
 import { Button, Form, Input, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import styles from "./user.module.css";
 
 function UserList() {
   const [Model, setModel] = React.useState(false);
@@ -62,17 +63,21 @@ function UserList() {
   };
   return (
     <div>
-      <h1>User List</h1>
-      {authUserData?.userData?.is_superuser === true && (
-        <Button
-          type="primary"
-          onClick={() => {
-            setModel(true);
-          }}
-        >
-          Click
-        </Button>
-      )}
+      <div className={styles.userListHeader}>
+        <h3>User List</h3>
+
+        {authUserData?.userData?.is_superuser === true && (
+          <button
+            type="primary"
+            onClick={() => {
+              setModel(true);
+            }}
+            className={styles.addUserButton}
+          >
+            Update User
+          </button>
+        )}
+      </div>
       <Modal
         title={""}
         visible={Model}

@@ -1,0 +1,17 @@
+.userListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addUserButton {
+  height: 40px;
+  width: 113px;
+  padding: 10px;
+  background: linear-gradient(90deg, #ff9b44 0%, #fc6075 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}

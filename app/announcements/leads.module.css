@@ -77,9 +77,10 @@
 
 .label {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 5px;
-  margin-top: 10px;
+  margin-top: 15px;
+  color: white;
 }
 
 .modalInput {
@@ -92,9 +93,20 @@
   color: white;
 }
 
-.modalInput ::placeholder {
+.modalInput::placeholder {
   color: #aaa;
-  padding-left: 20px;
+  padding-left: 10px !important;
+}
+
+.modalTextArea::placeholder {
+  color: #aaa;
+  padding-left: 10px !important;
+  font-size: 14px;
+}
+
+.modalInput:focus,
+.modalTextArea:focus {
+  outline: none;
 }
 
 .modalTextArea {
@@ -105,4 +117,12 @@
   border: 1px solid #555;
   background: #222;
   color: white;
+}
+
+.Announcement_modal {
+  background-color: #1e1e1e !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
 }
