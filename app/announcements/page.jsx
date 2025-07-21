@@ -207,9 +207,7 @@ export default function Announcement() {
       </div>
       <Modal
         title={
-          <p className={`fs-s-18 mb-0 fw-600 ${"text-white"}`}>
-            Add Announcement
-          </p>
+          <p className={`${styles.Announcement_modal}`}>Add Announcement</p>
         }
         visible={Model}
         centered
