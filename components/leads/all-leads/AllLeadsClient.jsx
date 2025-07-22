@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { getManagersList, getPerformanceData } from "@/api/fetchClient";
+import {
+  getManagersList,
+  getPerformanceData,
+  getStatus,
+} from "@/api/fetchClient";
 import CustomTable from "@/components/CustomTable";
 import CustomPagination from "@/components/CustomPagination";
 import styles from "./main.module.css";
@@ -74,7 +78,20 @@ function PerformanceReview() {
     fetchManagers();
   }, []);
 
-  console.log(managers, "managers");
+  const [status, setStatus] = useState([]);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const resp = await getStatus();
+        if (resp?.status === 200) {
+          setStatus(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchStatus();
+  }, []);
 
   const baseCellStyle = {
     background: "#1e1e1e",
@@ -119,9 +136,9 @@ function PerformanceReview() {
     },
     {
       title: <p>Name</p>,
-      dataIndex: "name",
+      dataIndex: "employee_name",
       width: "50px",
-      render: (text, record) => renderCell(record?.name?.name || "-"),
+      render: (text, record) => renderCell(text || "-"),
     },
     {
       title: <p>Department</p>,
@@ -159,14 +176,30 @@ function PerformanceReview() {
     {
       title: <p>Performance Rating</p>,
       dataIndex: "",
-      width: "50px",
-      render: (text) => renderCell("N/A"),
+      width: "120px",
+      render: (_, record) => {
+        const sections = record?.sections || {};
+        const managerSum = Object.values(sections).reduce(
+          (acc, s) => acc + (s?.managerRating || 0),
+          0
+        );
+        let rating = "N/A";
+        if (managerSum >= 45) {
+          rating = "Exceeded";
+        } else if (managerSum >= 30) {
+          rating = "Met Expectations";
+        } else if (managerSum > 25) {
+          rating = "Below Expectations";
+        }
+
+        return renderCell(rating);
+      },
     },
     {
       title: <p>Status</p>,
-      dataIndex: "",
+      dataIndex: "status",
       width: "50px",
-      render: (text) => renderCell("N/A"),
+      render: (text) => renderCell(text),
     },
     {
       title: <p>Action</p>,
@@ -222,13 +255,18 @@ function PerformanceReview() {
     },
   ];
 
+  const statusCheck =
+    status[0]?.status === "Draft" || status[0]?.status === "Submitted";
+
   return (
     <div className="my-body">
       <div className={styles.flex_search_button}>
         <div>Performance review</div>
-        <div onClick={() => router.push("/performance-review/apply")}>
-          <button className={styles.button}>Apply</button>
-        </div>
+        {!statusCheck && (
+          <div onClick={() => router.push("/performance-review/apply")}>
+            <button className={styles.button}>Apply</button>
+          </div>
+        )}
       </div>
 
       <div className={`custom-antd-head-dark`}>
