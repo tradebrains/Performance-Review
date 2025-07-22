@@ -17,18 +17,16 @@ function Header() {
   const listedName =
     pathname?.split("/").pop() === "dashboard"
       ? "Dashboard"
-      : pathname?.split("/").pop() === "user-list"
+      : pathname?.split("/").pop() === "performance-review"
+      ? "Performance Review"
+      : pathname.includes("performance-review/edit/")
+      ? "Edit Performance Review"
+      : pathname.includes("performance-review/apply/")
+      ? "Apply Performance Review"
+      : pathname.includes("user-list")
       ? "User List"
-      : pathname.includes("user-management/edit/")
-      ? "User Management Edit"
-      : pathname.includes("superstar/edit/")
-      ? "Superstar Portfolio Edit"
-      : pathname.includes("affiliate")
-      ? "Affiliate"
-      : pathname.includes("stock-details/create")
-      ? "Stock Details Create"
-      : pathname.includes("stock-details/edit")
-      ? "Stock Details Edit"
+      : pathname.includes("announcements")
+      ? "Announcements"
       : "";
 
   const userData = useSelector(authStore);
@@ -68,7 +66,9 @@ function Header() {
 
         <div className={styles.controls}>
           <div className={styles.adminContainer}>
-            <span className={styles.name}>{userName}</span>
+            <span className={styles.name}>
+              {userName.charAt(0).toUpperCase() + userName.slice(1)}
+            </span>
             <Dropdown
               menu={{
                 items: menu.items,
@@ -82,7 +82,7 @@ function Header() {
                   backgroundColor: getRandomColor(),
                 }}
               >
-                {userName.slice(0, 1)}
+                {userName.slice(0, 1).toUpperCase()}
               </Avatar>
             </Dropdown>
           </div>

@@ -26,6 +26,8 @@ import {
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./Sidebar.module.css";
+import { authStore } from "@/redux/reducer/authSlice";
+import { useSelector } from "react-redux";
 
 const ICONS = {
   Users,
@@ -53,6 +55,7 @@ const Sidebar = ({ isMobile, isOpen }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
+  const userData = useSelector(authStore);
 
   const handleDropdownToggle = (name) => {
     setOpenDropdown((prev) => (prev === name ? null : name));
@@ -69,16 +72,20 @@ const Sidebar = ({ isMobile, isOpen }) => {
       href: "/performance-review",
       icon: "UsersRound",
     },
-    {
-      name: "Announcements",
-      href: "/announcements",
-      icon: "UserRound",
-    },
-    {
-      name: "User List",
-      href: "/user-list",
-      icon: "UserRound",
-    },
+    ...(userData?.userData?.is_superuser
+      ? [
+          {
+            name: "Announcements",
+            href: "/announcements",
+            icon: "UserRound",
+          },
+          {
+            name: "User List",
+            href: "/user-list",
+            icon: "UserRound",
+          },
+        ]
+      : []),
   ];
 
   const isSidebarExpanded = isMobile ? isOpen : isDesktopOpen;
@@ -103,14 +110,14 @@ const Sidebar = ({ isMobile, isOpen }) => {
 
         <nav className={styles.navContainer}>
           {sideBarItems.map((item) => {
-            const IconComponent = ICONS[item.icon];
+            const IconComponent = ICONS[item?.icon];
             const isActive =
-              pathname === item.href ||
-              item.subItems?.some((sub) => pathname === sub.href) ||
-              pathname.includes(item.href);
+              pathname === item?.href ||
+              item?.subItems?.some((sub) => pathname === sub?.href) ||
+              pathname.includes(item?.href);
 
             return (
-              <div key={item.name}>
+              <div key={item?.name}>
                 <div
                   className={`${styles.navItem} ${
                     isActive ? styles.navItemActive : ""
@@ -121,10 +128,10 @@ const Sidebar = ({ isMobile, isOpen }) => {
                     } else {
                       if (document.startViewTransition) {
                         document.startViewTransition(() => {
-                          router.push(item.href);
+                          router.push(item?.href);
                         });
                       } else {
-                        router.push(item.href);
+                        router.push(item?.href);
                       }
                     }
                   }}
@@ -136,8 +143,8 @@ const Sidebar = ({ isMobile, isOpen }) => {
 
                   {isSidebarExpanded && (
                     <span className={styles.navText}>
-                      {item.name}{" "}
-                      {item.hasDropdown && (
+                      {item?.name}{" "}
+                      {item?.hasDropdown && (
                         <span className={styles.dropdown_icon}>
                           {openDropdown ? <ChevronUp /> : <ChevronDown />}
                         </span>
@@ -146,25 +153,25 @@ const Sidebar = ({ isMobile, isOpen }) => {
                   )}
                 </div>
 
-                {item.hasDropdown &&
-                  openDropdown === item.name &&
+                {item?.hasDropdown &&
+                  openDropdown === item?.name &&
                   isSidebarExpanded && (
                     <div className={styles.dropdownContainer}>
-                      {item.subItems.map((subItem) => (
+                      {item?.subItems.map((subItem) => (
                         <div
-                          key={subItem.name}
+                          key={subItem?.name}
                           className={`${styles.navItem} ${
-                            pathname === subItem.href
+                            pathname === subItem?.href
                               ? styles.navItemActive
                               : ""
                           }`}
-                          onClick={() => router.push(subItem.href)}
+                          onClick={() => router.push(subItem?.href)}
                         >
                           <span
                             className={styles.navText}
                             style={{ paddingLeft: "30px" }}
                           >
-                            {subItem.name}
+                            {subItem?.name}
                           </span>
                         </div>
                       ))}

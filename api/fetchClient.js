@@ -104,3 +104,10 @@ export const getEmployeeDetails = async (email) => {
   );
   return response;
 };
+
+export const getStatus = async () => {
+  const response = await get(`status-check/`).then((resp) => {
+    return resp;
+  });
+  return response;
+};

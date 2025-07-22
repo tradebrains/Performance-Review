@@ -271,6 +271,19 @@ function LoginForm() {
                 <Input style={{ height: "40px" }} placeholder="Enter Name" />
               </Form.Item>
               <Form.Item
+                // label="Name"
+                name="employee_id"
+                rules={[
+                  { required: true, message: "Please enter Employee ID" },
+                ]}
+                className="form-placeholder"
+              >
+                <Input
+                  style={{ height: "40px" }}
+                  placeholder="Enter Employee ID"
+                />
+              </Form.Item>
+              <Form.Item
                 // label="Designation"
                 name="designation"
                 className="form-placeholder"
@@ -278,7 +291,7 @@ function LoginForm() {
               >
                 <Input
                   style={{ height: "40px" }}
-                  placeholder="Enter Designation"
+                  placeholder="Enter Department"
                 />
               </Form.Item>
               <Form.Item
