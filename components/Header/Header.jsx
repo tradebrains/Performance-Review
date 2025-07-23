@@ -21,8 +21,8 @@ function Header() {
       ? "Performance Review"
       : pathname.includes("performance-review/edit/")
       ? "Edit Performance Review"
-      : pathname.includes("performance-review/apply/")
-      ? "Apply Performance Review"
+      : pathname.includes("performance-review/apply")
+      ? "Performance Review Form"
       : pathname.includes("user-list")
       ? "User List"
       : pathname.includes("announcements")

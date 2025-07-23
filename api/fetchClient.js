@@ -111,3 +111,10 @@ export const getStatus = async () => {
   });
   return response;
 };
+
+export const putStatus = async (data) => {
+  const response = await put(`status-check/`, data).then((resp) => {
+    return resp;
+  });
+  return response;
+};
