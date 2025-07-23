@@ -45,7 +45,6 @@ function LoginForm() {
         // dispatch(setAuth(resp.data));
 
         // const employeeResp = await getEmployeeDetails(email);
-        // console.log(employeeResp, "employeeResp");
 
         // if (employeeResp?.status === 200) {
         //   dispatch(setEmployee(employeeResp.data));

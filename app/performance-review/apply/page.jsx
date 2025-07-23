@@ -7,14 +7,22 @@ import {
   getManagersList,
   getPerformanceData,
   getPerformanceEditData,
+  getStatus,
+  getUserData,
   postPerformanceReviewData,
+  postStatus,
   putPerformanceReviewData,
+  putStatus,
 } from "@/api/fetchClient";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { authStore } from "@/redux/reducer/authSlice";
 
 export default function BonusReviewForm() {
   const [TableData, setTableData] = useState([]);
   const [managers, setManagers] = useState([]);
+  const [userData, setUserData] = useState();
+  const auth = useSelector(authStore);
   const [formData, setFormData] = useState({
     employee_id: "",
     jobTitle: "",
@@ -70,22 +78,6 @@ export default function BonusReviewForm() {
     }));
   };
 
-  console.log(formData, "formData");
-
-  const handleSubmit = async () => {
-    try {
-      const res = await fetch("/api/submit-review", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const result = await res.json();
-      alert("Submitted Successfully!");
-    } catch (err) {
-      alert("Error submitting form.");
-    }
-  };
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const employeeId = searchParams.get("employeeId");
@@ -117,7 +109,50 @@ export default function BonusReviewForm() {
       } catch (error) {}
     };
     fetchManagers();
+    const getUser = async () => {
+      await getUserData().then((resp) => {
+        setUserData(resp?.data);
+      });
+    };
+    getUser();
   }, []);
+
+  const [status, setStatus] = useState([]);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const resp = await getStatus();
+        if (resp?.status === 200) {
+          setStatus(resp?.data);
+        } else {
+        }
+      } catch (error) {}
+    };
+    fetchStatus();
+  }, []);
+
+  const postStatusCheck = async () => {
+    const data = {
+      employee_id: auth?.userData?.employee_id,
+      status: "Draft",
+    };
+    await putStatus(data).then((resp) => {
+      if (resp.status === 201) {
+      }
+    });
+  };
+
+  const submitStatusCheck = async () => {
+    const data = {
+      employee_id: auth?.userData?.employee_id,
+      status: "Submitted",
+    };
+    await putStatus(data).then((resp) => {
+      if (resp.status === 201) {
+      }
+    });
+  };
 
   useEffect(() => {
     if (TableData) {
@@ -205,7 +240,86 @@ export default function BonusReviewForm() {
     }
   }, [TableData]);
 
-  const postPerformanceReview = async () => {
+  const draftPerformanceReview = async () => {
+    const data = {
+      employee_id: formData.employee_id,
+      job_title: formData.jobTitle,
+      supervisor: formData.supervisor,
+      department: formData.department,
+      jobDuties: formData.jobDuties,
+      performanceSummary: formData.performanceSummary,
+      planning_employee_rating: formData.sections.planning.employeeRating,
+      planning_manager_rating: formData.sections.planning.managerRating,
+      productivity_comments: formData.sections.productivity.employeeComment,
+      productivity_employee_rating:
+        formData.sections.productivity.employeeRating,
+      productivity_manager_rating: formData.sections.productivity.managerRating,
+      quality_comments: formData.sections.quality.employeeComment,
+      quality_employee_rating: formData.sections.quality.employeeRating,
+      quality_manager_rating: formData.sections.quality.managerRating,
+      knowledge_comments: formData.sections.knowledge.employeeComment,
+      knowledge_employee_rating: formData.sections.knowledge.employeeRating,
+      knowledge_manager_rating: formData.sections.knowledge.managerRating,
+      innovation_comments: formData.sections.innovation.employeeComment,
+      innovation_employee_rating: formData.sections.innovation.employeeRating,
+      innovation_manager_rating: formData.sections.innovation.managerRating,
+      peerComm_comments: formData.sections.peerComm.employeeComment,
+      peerComm_employee_rating: formData.sections.peerComm.employeeRating,
+      peerComm_manager_rating: formData.sections.peerComm.managerRating,
+      teamRel_comments: formData.sections.teamRel.employeeComment,
+      teamRel_employee_rating: formData.sections.teamRel.employeeRating,
+      teamRel_manager_rating: formData.sections.teamRel.managerRating,
+      writing_comments: formData.sections.writing.employeeComment,
+      writing_employee_rating: formData.sections.writing.employeeRating,
+      writing_manager_rating: formData.sections.writing.managerRating,
+      oralComm_comments: formData.sections.oralComm.employeeComment,
+      oralComm_employee_rating: formData.sections.oralComm.employeeRating,
+      oralComm_manager_rating: formData.sections.oralComm.managerRating,
+      selfImprovement_comments:
+        formData.sections.selfImprovement.employeeComment,
+      selfImprovement_employee_rating:
+        formData.sections.selfImprovement.employeeRating,
+      selfImprovement_manager_rating:
+        formData.sections.selfImprovement.managerRating,
+      otherCriteria: formData.otherCriteria,
+      futureGoals: formData.futureGoals,
+      overallSummary: formData.overallSummary,
+      employeeComments: formData.employeeComments,
+      managerComments: formData.managerComments,
+      planning_comments: formData.sections.planning.employeeComment,
+    };
+    if (employeeId) {
+      try {
+        const resp = await putPerformanceReviewData(employeeId, data);
+
+        if (resp?.message === "Performance review form updated successfully.") {
+          message.success(resp?.message);
+          postStatusCheck();
+          router.push("/performance-review");
+        } else {
+          message.error("Failed to submit Performance Review.");
+        }
+      } catch (error) {
+        if (error.response) {
+          message.error("Failed to submit Performance Review.");
+        } else {
+          message.error("Something went wrong.");
+        }
+      }
+    } else {
+      await postPerformanceReviewData(data).then((resp) => {
+        if (resp?.message === "Performance review form Created successfully.") {
+          message.success(resp?.message);
+          postStatusCheck();
+          router.push("/performance-review");
+        } else {
+          message.error("Failed to submit Performance Review.");
+        }
+      });
+    }
+  };
+
+  const SubmitPerformanceReview = async () => {
     const data = {
       employee_id: formData.employee_id,
       job_title: formData.jobTitle,
@@ -260,6 +374,7 @@ export default function BonusReviewForm() {
 
         if (resp?.message === "Performance review form updated successfully.") {
           message.success(resp?.message);
+          submitStatusCheck();
           router.push("/performance-review");
         } else {
           message.error("Failed to submit Performance Review.");
@@ -275,6 +390,7 @@ export default function BonusReviewForm() {
       await postPerformanceReviewData(data).then((resp) => {
         if (resp?.message === "Performance review form Created successfully.") {
           message.success(resp?.message);
+          submitStatusCheck();
           router.push("/performance-review");
         } else {
           message.error("Failed to submit Performance Review.");
@@ -410,6 +526,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.planning.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -473,6 +590,7 @@ export default function BonusReviewForm() {
                     ? "rated"
                     : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -531,6 +649,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.quality.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -584,6 +703,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.knowledge.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -637,6 +757,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.innovation.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -695,6 +816,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.peerComm.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -749,6 +871,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.teamRel.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -803,6 +926,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.writing.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -856,6 +980,7 @@ export default function BonusReviewForm() {
                 className={`custom-rate ${
                   formData.sections.oralComm.managerRating > 0 ? "rated" : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -918,6 +1043,7 @@ export default function BonusReviewForm() {
                     ? "rated"
                     : ""
                 }`}
+                disabled={!auth?.userData?.is_manager}
               />
             </div>
           </div>
@@ -961,12 +1087,12 @@ export default function BonusReviewForm() {
 
       <div className={styles.buttonContainer}>
         <div className={styles.buttonGroup}>
-          <button className={styles.button} onClick={postPerformanceReview}>
+          <button className={styles.button} onClick={draftPerformanceReview}>
             Save Draft
           </button>
         </div>
         <div className={styles.buttonGroup}>
-          <button className={styles.button} onClick={postPerformanceReview}>
+          <button className={styles.button} onClick={SubmitPerformanceReview}>
             Submit
           </button>
         </div>
