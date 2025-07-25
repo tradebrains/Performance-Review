@@ -223,6 +223,17 @@ function PerformanceReview() {
                         <p className={styles.edit}>Edit</p>
                       </div>
                     </div>
+                    <div className={`text-white ${styles}`}>
+                      <div
+                        onClick={() => {
+                          router.push(
+                            `/performance-review/preview?employeeId=${record?.id}`
+                          );
+                        }}
+                      >
+                        <p className={styles.edit}>Preview</p>
+                      </div>
+                    </div>
                   </div>
                 }
               >

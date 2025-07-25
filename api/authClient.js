@@ -6,7 +6,7 @@ const instance = axios.create({
 export const authPost = (url, data) => {
   return instance.post(url, data);
 };
-export const get = (url) => {
+export const authGet = (url) => {
   return instance.get(url);
 };
 export const del = (url, data) => {
