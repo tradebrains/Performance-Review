@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities; */
 
+body.preview {
+  background-color: transparent;
+}
+
 .layout-container {
   display: flex;
   height: 100vh;
@@ -1055,4 +1059,24 @@ a.ck.ck-button.ck-on {
   .ant-modal-close-x
   .anticon-close {
   color: white !important;
+}
+
+.custom-rate-preview .ant-rate-star svg {
+  color: #f2f2f2 !important;
+}
+
+.custom-rate-preview.rated .ant-rate-star-full svg {
+  color: #f5d81b !important;
+}
+
+.custom-rate-preview.rated .ant-rate-star-half .ant-rate-star-first svg {
+  color: #f5d81b !important;
+}
+
+.custom-rate-preview.rated .ant-rate-star-half .ant-rate-star-second svg {
+  color: #f2f2f2 !important;
+}
+
+p {
+  margin: 0px;
 }

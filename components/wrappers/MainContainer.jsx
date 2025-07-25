@@ -34,6 +34,16 @@ const MainContainer = ({ children }) => {
 
   const pathname = usePathname(); // Add inside MainContainer
 
+  const isPreview = pathname.includes("preview");
+
+  useEffect(() => {
+    if (isPreview) {
+      document.body.classList.add("preview");
+    } else {
+      document.body.classList.remove("preview");
+    }
+  }, [isPreview]);
+
   useEffect(() => {
     if (isMobile) {
       setIsSidebarOpen(false); // ✅ close on route change in mobile
@@ -43,49 +53,55 @@ const MainContainer = ({ children }) => {
   if (!mounted) return null; // Prevent SSR mismatch
 
   return (
-    <div className="layout-container">
-      {/* Burger menu button */}
-      {isMobile && !isSidebarOpen && (
-        <div className="burger-icon" onClick={() => setIsSidebarOpen(true)}>
-          <MenuOutlined
-            style={{
-              fontSize: "22px",
-              color: "white",
-            }}
-          />
+    <>
+      {isPreview ? (
+        <> {children}</>
+      ) : (
+        <div className="layout-container">
+          {/* Burger menu button */}
+          {isMobile && !isSidebarOpen && (
+            <div className="burger-icon" onClick={() => setIsSidebarOpen(true)}>
+              <MenuOutlined
+                style={{
+                  fontSize: "22px",
+                  color: "white",
+                }}
+              />
+            </div>
+          )}
+
+          {/* Mobile sidebar close icon */}
+          {isMobile && isSidebarOpen && (
+            <div className="close-icon" onClick={() => setIsSidebarOpen(false)}>
+              <CloseOutlined
+                style={{
+                  fontSize: "22px",
+                  color: "white",
+                }}
+              />
+            </div>
+          )}
+
+          {isMobile && isSidebarOpen && (
+            <div
+              className="sidebar-backdrop"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+
+          {/* Sidebar */}
+          <Sidebar isMobile={isMobile} isOpen={isSidebarOpen} />
+
+          {/* Main Content */}
+          <div className="content-wrapper">
+            <div className="header-container">
+              <Header />
+              <AuthLayoutWrapper>{children}</AuthLayoutWrapper>
+            </div>
+          </div>
         </div>
       )}
-
-      {/* Mobile sidebar close icon */}
-      {isMobile && isSidebarOpen && (
-        <div className="close-icon" onClick={() => setIsSidebarOpen(false)}>
-          <CloseOutlined
-            style={{
-              fontSize: "22px",
-              color: "white",
-            }}
-          />
-        </div>
-      )}
-
-      {isMobile && isSidebarOpen && (
-        <div
-          className="sidebar-backdrop"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <Sidebar isMobile={isMobile} isOpen={isSidebarOpen} />
-
-      {/* Main Content */}
-      <div className="content-wrapper">
-        <div className="header-container">
-          <Header />
-          <AuthLayoutWrapper>{children}</AuthLayoutWrapper>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

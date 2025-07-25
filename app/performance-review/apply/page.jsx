@@ -1082,6 +1082,7 @@ export default function BonusReviewForm() {
         placeholder="Type your answer here.."
         value={formData.managerComments}
         className={styles.textarea}
+        disabled={!auth?.userData?.is_manager}
         onChange={(e) => handleChange("managerComments", e.target.value)}
       />
 
