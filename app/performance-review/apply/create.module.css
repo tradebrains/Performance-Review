@@ -26,6 +26,11 @@
   border-radius: 8px;
   color: white;
   resize: vertical;
+  /* margin-top: 10px; */
+}
+
+.p_tag {
+  margin: 16px 0px;
 }
 
 .textarea {
