@@ -567,7 +567,7 @@ a.ck.ck-button.ck-on {
   inset-inline-end: 0;
   width: 1px;
   height: 1.6em;
-  background-color: transparent;
+  background-color: transparent !important;
   transform: translateY(-50%);
   transition: background-color 0.2s;
   content: "";
