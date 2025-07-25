@@ -404,7 +404,7 @@ export default function BonusReviewForm() {
       <h3>Performance Review Form</h3>
       <div className={styles.row}>
         <div className={styles.w_50}>
-          <p>Employee Id</p>
+          <p className={styles.p_tag}>Employee Id</p>
           <input
             type="text"
             className={styles.input}
@@ -414,7 +414,7 @@ export default function BonusReviewForm() {
           />
         </div>
         <div className={styles.w_50}>
-          <p>Job Title</p>
+          <p className={styles.p_tag}>Job Title</p>
           <input
             type="text"
             placeholder="Job Title"
@@ -426,7 +426,7 @@ export default function BonusReviewForm() {
       </div>
       <div className={styles.row}>
         <div className={styles.w_50}>
-          <p>Supervisor/Manager</p>
+          <p className={styles.p_tag}>Supervisor/Manager</p>
           <select
             className={styles.input}
             value={formData.supervisor}
@@ -440,7 +440,7 @@ export default function BonusReviewForm() {
           </select>
         </div>
         <div className={styles.w_50}>
-          <p>Department</p>
+          <p className={styles.p_tag}>Department</p>
           <input
             type="text"
             placeholder="Department"
@@ -452,25 +452,25 @@ export default function BonusReviewForm() {
       </div>
 
       <div>
-        <p>
+        <p className={styles.p_tag}>
           Describe the Job Duties, Goals, and Responsibilities for the Review
           Period:
         </p>
         <textarea
           placeholder="Type your answer here..."
-          className={styles.input}
+          className={styles.textarea}
           value={formData.jobDuties}
           onChange={(e) => handleChange("jobDuties", e.target.value)}
         />
       </div>
       <div>
-        <p>
+        <p className={styles.p_tag}>
           Summarize the Performance Results. Indicate Whether the Goals Were
           Exceeded, Achieved, or Not Met
         </p>
         <textarea
           placeholder="Type your answer here..."
-          className={styles.input}
+          className={styles.textarea}
           value={formData.performanceSummary}
           onChange={(e) => handleChange("performanceSummary", e.target.value)}
         />
